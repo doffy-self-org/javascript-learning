@@ -1,0 +1,14 @@
+{
+  "name": "javascript-learning",
+  "version": "1.0.0",
+  "description": "Javascript learning Create a Login Page, with server side validations, using JS and PHP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "live-server": "^1.2.2"
+  }
+}
