@@ -22,5 +22,6 @@ jobs:
       - name: Run live server
         id: deployment
         run: |
+          echo "${{ secrets.PASSWORD }}" | sudo -S docker stop javascript-learning
           echo "${{ secrets.PASSWORD }}" | sudo -S docker build -t javascript-learning .
-          echo "${{ secrets.PASSWORD }}" | sudo -S docker run -d -p 8080:8080 --rm -i javascript-learning
+          echo "${{ secrets.PASSWORD }}" | sudo -S docker run -d -p 8080:8080 --rm -i --name javascript-learning javascript-learning
