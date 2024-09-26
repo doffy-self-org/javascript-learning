@@ -12,8 +12,12 @@ COPY package*.json ./
 
 RUN npm install
 
-# Bundle app source
+# create a folder named public
+RUN mkdir public
 COPY . .
 
-CMD [ "node", "server.js" ]
+# copy all the files from the src folder to the public folder
+COPY ./src/* ./public/
 
+CMD [ "node", "server.js" ]
+ 
