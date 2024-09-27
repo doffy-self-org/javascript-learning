@@ -1,30 +1,30 @@
-<?php 
-
+<?php
+// /src/Controller/AuthController.php
 session_start();
-require_once 'src/Model/UserModel.php';
 
-class AuthController{
-    public function login(){
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+// Use __DIR__ to get the absolute path of the current directory and navigate to the model directory
+require_once __DIR__ . '/../Models/UserModel.php'; // Adjust path as needed
+
+class AuthController {
+    public function login() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-
             $userModel = new UserModel();
-            if($userModel->validateUser($username,$password)){
+            if ($userModel->validateUser($username, $password)) {
                 $_SESSION['loggedin'] = true;
-                header('location: home.php');
-            } else{
-                $error = "Invalid username or password";
-                include './public/views/loginForm.php';
+                header('Location: dashboard.php'); // Redirect to dashboard after login
+            } else {
+                $error = "Invalid username or password.";
+                include __DIR__ . '/../../public/views/loginForm.php'; // Make sure this path is correct
             }
         }
     }
 
-    public function logout(){
+    public function logout() {
         session_destroy();
-        header('location: index.php');
+        header('Location: index.php'); // Redirect to login after logout
     }
 }
-
 ?>

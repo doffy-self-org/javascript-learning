@@ -1,21 +1,30 @@
 <?php
-require_once './src/connection.php';
 
-class UserModel{
-    private $conn;
+class UserModel {
+    private $users;
 
-    public function __contructor(){
-        $this->conn = new Connection();
+    public function __construct() {
+        $this->loadUsers();
     }
 
-    public function validateUser($username, $password){
-        $connection = $this->conn->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
-        $connection->bindParam(':username', $username);
-        $connection->bindParam(':password', $password);
-        $connection->execute();
+    // Load users from the JSON file
+    private function loadUsers() {
+        $jsonFile = __DIR__ . '/../users.json';
+        if (file_exists($jsonFile)) {
+            $jsonData = file_get_contents($jsonFile);
+            $this->users = json_decode($jsonData, true)['users'];
+        } else {
+            $this->users = [];
+        }
+    }
 
-        return $connection->rowCount()>0;
+    // Validate the user based on username and password
+    public function validateUser($username, $password) {
+        foreach ($this->users as $user) {
+            if ($user['username'] === $username && $user['password'] === $password) {
+                return true;
+            }
+        }
+        return false;
     }
 }
-
-?>
